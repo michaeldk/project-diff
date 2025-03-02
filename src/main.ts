@@ -1,6 +1,13 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+import {
+  getSetting,
+  setSetting,
+  deleteSetting,
+  getAllSettings,
+} from './services/settings';
+import { Setting } from './types/settings';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -31,7 +38,26 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  // IPC handlers
+  ipcMain.handle('get-setting', async (event, key: string) => {
+    return getSetting(key);
+  });
+  
+  ipcMain.handle('set-setting', async (event, key: string, value: Setting) => {
+    setSetting(key, value);
+  });
+  
+  ipcMain.handle('delete-setting', async (event, key: string) => {
+    deleteSetting(key);
+  });
+  
+  ipcMain.handle('get-all-settings', async (event) => {
+    return getAllSettings();
+  });
+
+  createWindow();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -49,6 +75,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

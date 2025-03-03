@@ -1,10 +1,11 @@
-export interface Setting {
+export type Setting = {
+  key?: string;
   label: string;
   path: string;
   gitignore: boolean;
   additionalIgnores: string[];
 }
 
-export interface Settings {
+export type Settings = {
   [key: string]: Setting;
 }

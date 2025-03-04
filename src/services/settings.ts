@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { SETTINGS_FILE_PATH } from '../config';
 import { Setting, Settings } from '../types/settings';
+import slug from 'slug';
 
 function readSettings(): Settings {
   if (!fs.existsSync(SETTINGS_FILE_PATH)) {
@@ -20,7 +21,15 @@ export function getSetting(key: string): Setting | undefined {
   return settings[key];
 }
 
-export function setSetting(key: string, value: Setting): void {
+export function setSetting(value: Setting): void {
+  const settings = readSettings();
+  const key = slug(value.label);
+  value.key = key;
+  settings[key] = value;
+  writeSettings(settings);
+}
+
+export function editSetting(key: string, value: Setting): void {
   const settings = readSettings();
   settings[key] = value;
   writeSettings(settings);

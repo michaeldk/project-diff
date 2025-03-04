@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-900 text-white h-screen">
     <div class="border-b-2 p-3 shadow-inner flex justify-between bg-gray-700 text-gray-400 border-slate-500">
-      <router-link to="/">💖 Project diff</router-link> <router-link to="/settings">
+      <router-link :to="{ name: 'compare_view' }">💖 Project diff</router-link> <router-link :to="{ name: 'settings_list' }">
         <FontAwesomeIcon :icon="faGear" />
       </router-link></div>
     <div class="p-5">

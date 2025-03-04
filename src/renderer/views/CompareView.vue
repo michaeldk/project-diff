@@ -1,31 +1,48 @@
+<script setup lang="ts">
+import { Settings } from 'src/types/settings';
+import { onMounted, ref, useTemplateRef } from 'vue';
+
+const settings = ref<Settings>();
+const isComparable = ref<boolean>(false);
+const projectSrc = useTemplateRef('source_project');
+const projectTgt = useTemplateRef('target_project');
+
+onMounted(async () => {
+  settings.value = await fetchAllSettings();
+})
+
+async function fetchAllSettings(): Promise<Settings> {
+  return await window.electronAPI.getAllSettings();
+}
+
+const handleChange = (event: Event) => {
+  isComparable.value = projectSrc.value.value !== projectTgt.value.value;
+}
+</script>
+
 <template>
   <div>
     <h1 class="text-3xl mb-5">Select projects to compare</h1>
     <div class="flex gap-4 items-end">
       <div class="max-w-xs w-full">
-        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Source
+        <label for="source_project" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Source
           project</label>
-        <select id="countries"
+        <select id="source_project" ref="source_project" @change="handleChange"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option>Belparcel ACC</option>
-          <option>Belparcel PRD</option>
-          <option>Expats ACC</option>
-          <option>Expats PRD</option>
+          <option v-for="setting in settings" :value="setting.key">{{ setting.label }}</option>
         </select>
       </div>
       <div class="max-w-xs w-full">
-        <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target
+        <label for="target_project"
+         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target
           project</label>
-        <select id="countries"
+        <select id="target_project" ref="target_project" @change="handleChange"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option>Belparcel ACC</option>
-          <option>Belparcel PRD</option>
-          <option>Expats ACC</option>
-          <option>Expats PRD</option>
+          <option v-for="setting in settings" :value="setting.key">{{ setting.label }}</option>
         </select>
       </div>
-      <button type="submit"
-        class="text-white border border-blue-700 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 leading-normal">Compare</button>
+      <button type="submit" :disabled="!isComparable"
+        class="text-white border border-blue-700 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 leading-normal disabled:bg-gray-600 disabled:border-gray-600 disabled:hover:bg-gray-600 disabled:hover:border-gray-600 disabled:cursor-not-allowed">Compare</button>
     </div>
     <div class="grid grid-cols-compare gap-4 mt-5">
       <div class="col">text-sky-500</div>

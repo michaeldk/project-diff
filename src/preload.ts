@@ -5,7 +5,8 @@ import { Setting } from './types/settings';
 
 contextBridge.exposeInMainWorld('electronAPI', {
   getSetting: (key: string) => ipcRenderer.invoke('get-setting', key),
-  setSetting: (key: string, value: Setting) => ipcRenderer.invoke('set-setting', key, value),
+  setSetting: (value: Setting) => ipcRenderer.invoke('set-setting', value),
+  editSetting: (key: string, value: Setting) => ipcRenderer.invoke('edit-setting', key, value),
   deleteSetting: (key: string) => ipcRenderer.invoke('delete-setting', key),
   getAllSettings: () => ipcRenderer.invoke('get-all-settings')
 });

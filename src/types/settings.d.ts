@@ -3,7 +3,7 @@ export type Setting = {
   label: string;
   path: string;
   gitignore: boolean;
-  additionalIgnores: string[];
+  additionalIgnores: string;
 }
 
 export type Settings = {

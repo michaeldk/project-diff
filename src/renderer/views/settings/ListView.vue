@@ -26,14 +26,14 @@ async function fetchAllSettings(): Promise<Settings> {
           <tr>
             <th class="px-6 py-3">Project</th>
             <th class="px-6 py-3">Path</th>
-            <th class="px-6 py-3 text-right"><span class="sr-only">Actions</span> <router-link to="/add" class="text-sky-600 hover:text-sky-500"><FontAwesomeIcon :icon="faPlus" /></router-link></th>
+            <th class="px-6 py-3 text-right"><span class="sr-only">Actions</span> <router-link :to="{ name: 'settings_add' }" class="text-sky-600 hover:text-sky-500"><FontAwesomeIcon :icon="faPlus" /></router-link></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in settings" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ item.label }}</td>
             <td class="px-6 py-4">{{ item.path }}</td>
-            <td class="px-6 py-4 text-right text-sky-600 hover:text-sky-500"><router-link to="/settings">
+            <td class="px-6 py-4 text-right text-sky-600 hover:text-sky-500"><router-link :to="{ name: 'settings_edit', params: { key: item.key } }">
                 <FontAwesomeIcon :icon="faGear" />
               </router-link></td>
           </tr>

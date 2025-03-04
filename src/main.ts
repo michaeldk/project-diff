@@ -4,6 +4,7 @@ import started from 'electron-squirrel-startup';
 import {
   getSetting,
   setSetting,
+  editSetting,
   deleteSetting,
   getAllSettings,
 } from './services/settings';
@@ -44,8 +45,12 @@ app.on('ready', () => {
     return getSetting(key);
   });
   
-  ipcMain.handle('set-setting', async (event, key: string, value: Setting) => {
-    setSetting(key, value);
+  ipcMain.handle('set-setting', async (event, value: Setting) => {
+    setSetting(value);
+  });
+  
+  ipcMain.handle('edit-setting', async (event, key: string, value: Setting) => {
+    editSetting(key, value);
   });
   
   ipcMain.handle('delete-setting', async (event, key: string) => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faGear, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Settings } from 'src/types/settings';
+import { Settings } from '@/types/settings';
 import { onMounted, ref } from 'vue';
 
 const settings = ref<Settings>();

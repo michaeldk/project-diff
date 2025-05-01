@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Setting } from '../../../types/settings';
+import type { Setting } from '@/types/settings';
 
-import SettingForm from '../../components/SettingForm.vue';
+import SettingForm from '@/renderer/components/SettingForm.vue';
 
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router'

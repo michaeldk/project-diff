@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Settings } from 'src/types/settings';
+import type { Settings } from '@/types/settings';
 import { onMounted, ref, useTemplateRef } from 'vue';
 
 const settings = ref<Settings>();

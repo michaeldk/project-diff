@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Setting } from '../../types/settings';
+import type { Setting } from '@/types/settings';
 
 defineEmits(['submit'])
 const setting = defineModel<Setting>({ required: true })

@@ -8,7 +8,8 @@ import {
   deleteSetting,
   getAllSettings,
 } from './services/settings';
-import { Setting } from './types/settings';
+import { Setting } from '@/types/settings';
+import { compare } from '@/services/compare';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {

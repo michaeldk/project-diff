@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Setting } from '../../../types/settings';
+import type { Setting } from '@/types/settings';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import SettingForm from '../../components/SettingForm.vue';
+import SettingForm from '@/renderer/components/SettingForm.vue';
 import slug from 'slug';
 
 const router = useRouter();
